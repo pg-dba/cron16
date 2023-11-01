@@ -2,8 +2,8 @@
 # c_resend_report.sh
 
 FILEREPORT='/cronwork/pg_profile_daily.html'
-REPORTNAME="${HOST} ReSend Daily Report"
-MSGTEXT="<html>PostgreSQL on ${HOST} pg_profile ${REPORTNAME}<BR><p style=\"font-family:Monospace;font-size:10px\"><a href=\"https://postgrespro.ru/docs/postgrespro/16/pgpro-pwr#PGPRO-PWR-SECTIONS-OF-A-REPORT\">Описание разделов отчёта</a><BR><a href=\"https://github.com/zubkov-andrei/pg_profile/blob/master/doc/pg_profile.md#sections-of-a-report\">Description of report sections</a></p><BR>See Attachment</html>"
+REPORTNAME="<b>[${HOST}]</b> ReSend Daily Report"
+MSGTEXT="<html>PostgreSQL pg_profile ${REPORTNAME}<BR><p style=\"font-family:Monospace;font-size:10px\"><a href=\"https://postgrespro.ru/docs/postgrespro/16/pgpro-pwr#PGPRO-PWR-SECTIONS-OF-A-REPORT\">Описание разделов отчёта</a><BR><a href=\"https://github.com/zubkov-andrei/pg_profile/blob/master/doc/pg_profile.md#sections-of-a-report\">Description of report sections</a></p><BR>See Attachment</html>"
 
 
 
