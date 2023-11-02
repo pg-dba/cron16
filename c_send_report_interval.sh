@@ -4,7 +4,13 @@
 FILEREPORT='/cronwork/pg_profile_interval.html'
 REPORTNAME="Interval Report"
 SUBJTEXT="PostgreSQL [${HOST}] pg_profile ${REPORTNAME}"
-MSGTEXT="<html>PostgreSQL <b>[${HOST}]</b> pg_profile ${REPORTNAME}<BR><p style=\"font-family:Monospace;font-size:10px\"><a href=\"https://postgrespro.ru/docs/postgrespro/16/pgpro-pwr#PGPRO-PWR-SECTIONS-OF-A-REPORT\">Описание разделов отчёта</a><BR><a href=\"https://github.com/zubkov-andrei/pg_profile/blob/master/doc/pg_profile.md#sections-of-a-report\">Description of report sections</a></p><BR>See Attachment</html>"
+MSGTEXT="<html>PostgreSQL <b>[${HOST}]</b> pg_profile ${REPORTNAME}<BR>
+<p><a href=\"https://postgrespro.ru/docs/postgrespro/16/pgpro-pwr#PGPRO-PWR-SECTIONS-OF-A-REPORT\">Описание разделов отчёта</a>
+<BR><a href=\"https://github.com/zubkov-andrei/pg_profile/blob/master/doc/pg_profile.md#sections-of-a-report\">Description of report sections</a></p>
+<p>Supported versions<BR>PostgreSQL:<BR>
+- 16 supported since version 4.3<BR>- 15 supported since version 4.1<BR>- 14 supported since version 0.3.4<BR>- 13 supported since version 0.1.3<BR>
+- 12 supported since version 0.1.0<BR>- 10 supported until version 4.1<BR><BR>pg_stat_statements extension:<BR>- 1.10 supported since version 4.1<BR>
+- 1.9 supported since version 4.0<BR>- 1.8 supported since version 0.1.2</p><BR>See Attachment</html>"
 SNAPS=$1
 SHIFT=$2
 
