@@ -1,5 +1,5 @@
 #!/bin/bash
-# send_flock.sh
+# c_send_flock.sh
 # https://wiki.postgresql.org/wiki/Lock_Monitoring
 
 MSG=$1
