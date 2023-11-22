@@ -1,5 +1,5 @@
 #!/bin/bash
-# c_vacuum.sh
+# c_vacuum_analyze.sh
 
 logfile="/cronwork/VACUUM_ANALYZE.log";
 
