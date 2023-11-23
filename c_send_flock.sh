@@ -2,7 +2,8 @@
 # c_send_flock.sh
 # https://wiki.postgresql.org/wiki/Lock_Monitoring
 
-MSG=$1
+#MSG=$1
+MSG="$1<BR><BR>urls:<BR>- <a href='https://wiki.colobridge.net/полезное/советы/как_исключить_повторный_запуск_скрипта'>как исключить повторный запуск скрипта</a><BR>- <a href='https://manpages.ubuntu.com/manpages/xenial/man1/flock.1.html'>flock</a><BR>"
 SUBJ="ALERT: flock in cron"
 
 if [[ -v MAILSMTP ]]; then
