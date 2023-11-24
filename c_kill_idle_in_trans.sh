@@ -1,6 +1,11 @@
 #!/bin/bash
+# c_kill_idle_in_trans.sh
 
+if [[ ("$#" -eq 0) ]]; then
 KILLTIMEOUT='30 minutes';
+else
+KILLTIMEOUT="$1";
+fi
 premsg='kill idle in trans';
 
 PGPASSWORD=${PASSWORD} psql -h ${HOST} -p ${PORT} -U ${USERNAME} -d ${DBNAME} -At -c " \
