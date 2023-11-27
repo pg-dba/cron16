@@ -1,3 +1,3 @@
 #!/bin/bash
 
-PGPASSWORD=${PASSWORD} psql -h ${HOST} -p ${PORT} -U ${USERNAME} -d ${DBNAME} -xtA -c "SET client_min_messages TO error; select public.log_switch()::text;" 2>&1 | sed -n '1p' | ts '[pglog] ';
+PGPASSWORD=${PASSWORD} PGOPTIONS="-c geqo=off -c statement_timeout=5min -c client_min_messages=error" psql -h ${HOST} -p ${PORT} -U ${USERNAME} -d ${DBNAME} -xtA -c "select public.log_switch()::text;" 2>&1 | sed -n '1p' | ts '[pglog] ';
