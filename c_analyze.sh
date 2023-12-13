@@ -19,8 +19,8 @@ Ts=($(PGPASSWORD=${PASSWORD} psql -h ${HOST} -p ${PORT} -U ${USERNAME} -d ${DBs[
 for tName in ${!Ts[*]}; do
 schemaName=$(echo ${Ss[$sName]} | sed 's/"//g');
 tableName=$(echo ${Ts[$tName]} | sed 's/"//g');
-echo "  $(date --iso-8601=seconds) : ANALYZE VERBOSE \"${schemaName}\".\"${tableName}\";" >> ${logfile} 2>&1;
-PGPASSWORD=${PASSWORD} psql -h ${HOST} -p ${PORT} -U ${USERNAME} -d ${DBs[$dbName]} -c "ANALYZE VERBOSE \"${schemaName}\".\"${tableName}\";" >> ${logfile} 2>&1;
+echo "  $(date --iso-8601=seconds) : ANALYZE (VERBOSE) \"${schemaName}\".\"${tableName}\";" >> ${logfile} 2>&1;
+PGPASSWORD=${PASSWORD} psql -h ${HOST} -p ${PORT} -U ${USERNAME} -d ${DBs[$dbName]} -c "ANALYZE (VERBOSE) \"${schemaName}\".\"${tableName}\";" >> ${logfile} 2>&1;
 done;
 done;
 done;
