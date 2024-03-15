@@ -21,7 +21,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get -y install postfix mutt && 
 COPY main.cf /etc/postfix/main.cf
 
 RUN wget https://repo.zabbix.com/zabbix/6.4/debian/pool/main/z/zabbix/zabbix-sender_6.4.12-1%2Bdebian11_amd64.deb \
-    && dpkg -i zabbix-sender_6.4.12-1+debian11_amd64.deb
+    && dpkg -i zabbix-sender_6.4.12-1+debian11_amd64.deb \
+    && apt-get -y install zabbix-sender
 
 RUN set -ex \
     && apt-get clean && apt-get update \
