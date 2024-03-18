@@ -23,7 +23,7 @@ for dbName in ${!DBs[*]}; do
 
 PGPASSWORD=${PASSWORD} pg_dump -h ${HOST} -p ${PORT} -U ${USERNAME} -d ${DBs[$dbName]} --schema-only -f "/pgbackups/${fprefix}_${DBs[$dbName]}_schema-only.sql" >> ${logfile} 2>&1;
 RC=$?
-echo "[pgdump]  psql db:${DBs[$dbName]} schema-only finished. RC=${RC}"
+echo "[pgdump]  pg_dump db:${DBs[$dbName]} schema-only finished. RC=${RC}"
 
 done;
 
