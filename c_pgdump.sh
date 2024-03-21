@@ -12,6 +12,7 @@ zbxskey='pgsql.backup.start["'${backupDatabase}'"]'
 zbxfkey='pgsql.backup.finish["'${backupDatabase}'"]'
 zbxrkey='pgsql.backup.rotation["'${backupDatabase}'"]'
 zbxtkey='pgsql.backup.time["'${backupDatabase}'"]'
+zbxckey='pgsql.backup.rc["'${backupDatabase}'"]'
 
 echo "[pgdump]  [${backupDatabase}] backup started"
 bkp_start=$EPOCHSECONDS
@@ -25,11 +26,10 @@ RC=$?
 echo "[pgdump]  [${backupDatabase}] backup finished. RC=${RC}"
 bkp_finish=$EPOCHSECONDS
 
-if [[ $RC -eq 0 ]] ; then
 if [ -n "${ZBX_SERVERS}" ]; then
+zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxckey}" -o "${RC}" 2>&1 1>/dev/null
 zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxfkey}" -o "$(date --iso-8601=seconds)" 2>&1 1>/dev/null
 zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxtkey}" -o "$((${bkp_finish}-${bkp_start}))" 2>&1 1>/dev/null
-fi
 fi
 
 if [[ ("$#" -eq 2) ]]; then
