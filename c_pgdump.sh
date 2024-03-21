@@ -17,7 +17,7 @@ zbxtkey='pgsql.pg_dump.backup.time["'${backupDatabase}'"]'
 zbxckey='pgsql.pg_dump.backup.rc["'${backupDatabase}'"]'
 zbxnkey='pgsql.pg_dump.transfer.rc["'${backupDatabase}'"]'
 zbxikey='pgsql.pg_dump.transfer.time["'${backupDatabase}'"]'
-zbxskey='pgsql.pg_dump.transfer.finish["'${backupDatabase}'"]'
+zbxhkey='pgsql.pg_dump.transfer.finish["'${backupDatabase}'"]'
 
 echo "[pgdump]  [${backupDatabase}] backup started"
 bkp_start=$(date +%s)
@@ -67,7 +67,7 @@ tr_finish=$(date +%s)
 if [ -n "${ZBX_SERVERS}" ]; then
 zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxnkey}" -o "${RC}" 2>&1 1>/dev/null
 zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxikey}" -o "$((${tr_finish}-${tr_start}))" 2>&1 1>/dev/null
-zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxskey}" -o "${tr_finish}" 2>&1 1>/dev/null
+zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxhkey}" -o "${tr_finish}" 2>&1 1>/dev/null
 fi
 
 fi
