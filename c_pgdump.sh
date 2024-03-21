@@ -1,5 +1,7 @@
 #!/bin/bash
+# c_pgdump.sh
 # need backups directory mapped /pgbackups
+# если определён ZBX_SERVERS, то шлёт статистику в Zabbix
 
 # если параметров 1 или 2 ,и второй только из цифр
 if [[ ("$#" -eq 1) || ( ("$#" -eq 2) && ($2 =~ ^[[:digit:]]+$) ) ]]; then
