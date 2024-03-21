@@ -15,20 +15,22 @@ zbxtkey='pgsql.backup.time["'${backupDatabase}'"]'
 zbxckey='pgsql.backup.rc["'${backupDatabase}'"]'
 
 echo "[pgdump]  [${backupDatabase}] backup started"
-bkp_start=$EPOCHSECONDS
+bkp_start=$(date +%s)
 if [ -n "${ZBX_SERVERS}" ]; then
-zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxskey}" -o "$(date --iso-8601=seconds)" 2>&1 1>/dev/null
+#zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxskey}" -o "$(date --iso-8601=seconds)" 2>&1 1>/dev/null
+zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxskey}" -o "${bkp_start}" 2>&1 1>/dev/null
 fi
 
 PGPASSWORD=${PASSWORD} pg_dump -h ${HOST} -p ${PORT} -U ${USERNAME} -Fc -f "/pgbackups/${backupName}" "${backupDatabase}" 2>&1
 RC=$?
 
 echo "[pgdump]  [${backupDatabase}] backup finished. RC=${RC}"
-bkp_finish=$EPOCHSECONDS
+bkp_finish=$(date +%s)
 
 if [ -n "${ZBX_SERVERS}" ]; then
 zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxckey}" -o "${RC}" 2>&1 1>/dev/null
-zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxfkey}" -o "$(date --iso-8601=seconds)" 2>&1 1>/dev/null
+#zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxfkey}" -o "$(date --iso-8601=seconds)" 2>&1 1>/dev/null
+zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxfkey}" -o "${bkp_finish}" 2>&1 1>/dev/null
 zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxtkey}" -o "$((${bkp_finish}-${bkp_start}))" 2>&1 1>/dev/null
 fi
 
