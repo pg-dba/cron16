@@ -11,4 +11,8 @@ env | while read -r LINE; do  # читаем результат команды '
     echo "${VAR} DEFAULT=\"${VAL}\"" >> /etc/security/pam_env.conf
 done
 
+if [ -n "${MINIO_BUCKET}" ]; then
+mc config --quiet host add minio ${MINIO_ENDPOINT_URL} ${MINIO_ACCESS_KEY_ID} ${MINIO_SECRET_ACCESS_KEY} 2>&1 1>/dev/null
+fi
+
 exec "$@"

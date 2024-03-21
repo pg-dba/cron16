@@ -19,7 +19,7 @@ RUN apt-get clean && apt-get update \
 
 #RUN export DEBIAN_FRONTEND=noninteractive && apt-get -y install barman-cli awscli gosu && unset DEBIAN_FRONTEND
 
-#RUN wget --quiet https://dl.min.io/client/mc/release/linux-amd64/mc && chmod 700 mc && mv mc /usr/bin/
+RUN wget --quiet https://dl.min.io/client/mc/release/linux-amd64/mc && chmod 700 mc && mv mc /usr/bin/
 
 RUN export DEBIAN_FRONTEND=noninteractive && apt-get -y install postfix mutt && unset DEBIAN_FRONTEND
 COPY main.cf /etc/postfix/main.cf
