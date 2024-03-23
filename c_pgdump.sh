@@ -39,7 +39,12 @@ zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxfkey}" -o
 zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxtkey}" -o "$((${bkp_finish}-${bkp_start}))" 2>&1 1>/dev/null
 fi
 
-if [[ ("$#" -eq 2) ]]; then
+if [[ ${RC} -ne 0 ]]; then
+rm -f /pgbackups/${backupName}
+echo "[pgdump]  backup file [${backupName}] deleted."
+fi
+
+if [[ ("$#" -eq 2) && (${RC} -eq 0) ]]; then
 
 saves=$2
 
