@@ -46,7 +46,7 @@ if [ -n "${MINIO_ENDPOINT_URL}" ]; then
 echo "[pgdump]  PGDUMPALL transfer started"
 tr_start=$(date +%s)
 
-mc cp "/pgbackups/${backupName}" ${MINIO_BUCKET}/ 2>&1 1>/dev/null
+mc cp /pgbackups/${fprefix}.tgz ${MINIO_BUCKET}/ 2>&1 1>/dev/null
 RC=$?
 
 echo "[pgdump]  PGDUMPALL transfer finished. RC=${RC}"
