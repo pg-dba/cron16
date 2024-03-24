@@ -19,7 +19,7 @@ DBs=($(PGPASSWORD=${PASSWORD} psql -h ${HOST} -p ${PORT} -U ${USERNAME} -d postg
 
 for dbName in ${!DBs[*]}; do
 
-PGPASSWORD=${PASSWORD} pg_dump -h ${HOST} -p ${PORT} -U ${USERNAME} -d ${DBs[$dbName]} --schema-only -f "/pgbackups/${fprefix}_${DBs[$dbName]}_schema-only.sql" >> ${logfile} 2>&1;
+PGPASSWORD=${PASSWORD} pg_dump -h ${HOST} -p ${PORT} -U ${USERNAME} -d ${DBs[$dbName]} --schema-only -f "/pgbackups/${fprefix}_${DBs[$dbName]}_schema-only.sql" 2>&1 1>/dev/null;
 RC=$?
 echo "[pgdump]  PGDUMPALL ${HOST}. pg_dump db:${DBs[$dbName]} schema-only finished. RC=${RC}"
 
