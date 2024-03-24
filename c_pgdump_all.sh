@@ -40,3 +40,16 @@ rm -f $(ls -1t --time-style=long-iso /pgbackups/${HOST}_*.tgz 2>/dev/null | sed 
 
 echo "[pgdump]  PGDUMPALL ${HOST}. $1 rotation completed."
 fi
+
+if [ -n "${MINIO_ENDPOINT_URL}" ]; then
+
+echo "[pgdump]  PGDUMPALL transfer started"
+tr_start=$(date +%s)
+
+mc cp "/pgbackups/${backupName}" ${MINIO_BUCKET}/ 2>&1 1>/dev/null
+RC=$?
+
+echo "[pgdump]  PGDUMPALL transfer finished. RC=${RC}"
+tr_finish=$(date +%s)
+
+fi
