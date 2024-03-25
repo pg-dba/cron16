@@ -44,6 +44,7 @@ RUN set -ex \
 RUN apt-get clean all
 
 RUN echo 'alias nocomments="sed -e :a -re '"'"'s/<\!--.*?-->//g;/<\!--/N;//ba'"'"' | sed -e :a -re '"'"'s/\/\*.*?\*\///g;/\/\*/N;//ba'"'"' | grep -v -P '"'"'^\s*(#|;|--|//|$)'"'"'"' >> ~/.bashrc
+RUN echo "alias ls='ls --time-style=long-iso'" >> ~/.bashrc
 
 COPY start-cron /usr/sbin/
 
