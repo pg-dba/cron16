@@ -3,6 +3,8 @@
 # need backups directory mapped /pgbackups
 # если определён ZBX_SERVERS, то шлёт статистику в Zabbix
 
+TRANSFERSTOP=0
+
 # если параметров 1 или 2 ,и второй только из цифр
 if [[ ("$#" -eq 1) || ( ("$#" -eq 2) && ($2 =~ ^[[:digit:]]+$) ) ]]; then
 
@@ -58,6 +60,8 @@ fi
 
 fi
 
+
+if [ ${TRANSFERSTOP} -eq 0 ]; then
 if [ -n "${MINIO_ENDPOINT_URL}" ]; then
 
 echo "[pgdump]  [${backupDatabase}] transfer started"
@@ -75,6 +79,7 @@ zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxikey}" -o
 zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxhkey}" -o "${tr_finish}" 2>&1 1>/dev/null
 fi
 
+fi
 fi
 
 fi
