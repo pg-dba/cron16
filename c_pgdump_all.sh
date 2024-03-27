@@ -3,6 +3,11 @@
 
 fprefix="${HOST}_$(date '+%Y-%m-%d_%H-%M-%S_%z')"
 
+zbxfkey='pgsql.pg_dump_all.backup.finish'
+zbxrkey='pgsql.pg_dump_all.backup.rotation'
+zbxckey='pgsql.pg_dump_all.backup.rc'
+zbxhkey='pgsql.pg_dump_all.transfer.finish'
+
 IFS="|";
 echo "[pgdump]  PGDUMPALL ${HOST} started."  2>&1;
 
@@ -28,6 +33,14 @@ done;
 find /pgbackups/ -name "${fprefix}*.sql" | tar czf /pgbackups/${fprefix}.tgz --files-from=- &>/dev/null;
 #tar -tvf /pgbackups/${fprefix}.tgz &>/dev/null;
 rm -f /pgbackups/${fprefix}*.sql
+RC=$?
+
+bkp_finish=$(date +%s)
+
+if [ -n "${ZBX_SERVERS}" ]; then
+zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxckey}" -o "${RC}" 2>&1 1>/dev/null
+zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxfkey}" -o "${bkp_finish}" 2>&1 1>/dev/null
+fi
 
 echo "[pgdump]  PGDUMPALL ${HOST} finished."
 
@@ -39,6 +52,11 @@ saves=$1
 rm -f $(ls -1t --time-style=long-iso /pgbackups/${HOST}_*.tgz 2>/dev/null | sed -n "$((${saves}+1)),\$p")
 
 echo "[pgdump]  PGDUMPALL ${HOST}. $1 rotation completed."
+
+if [ -n "${ZBX_SERVERS}" ]; then
+zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxrkey}" -o "${saves}" 2>&1 1>/dev/null
+fi
+
 fi
 
 if [ -n "${MINIO_ENDPOINT_URL}" ]; then
@@ -51,5 +69,9 @@ RC=$?
 
 echo "[pgdump]  PGDUMPALL transfer finished. RC=${RC}"
 tr_finish=$(date +%s)
+
+if [[ (-n "${ZBX_SERVERS}") && (${RC} -eq 0) ]]; then
+zabbix_sender -z ${ZBX_SERVERS} -p ${ZBX_PORT} -s ${ZBX_HOST} -k "${zbxhkey}" -o "${tr_finish}" 2>&1 1>/dev/null
+fi
 
 fi
